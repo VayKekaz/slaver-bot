@@ -14,7 +14,8 @@ fun main(args: Array<String>) {
   builder.build()
 }
 
-private fun parseToken(args: Array<String>) =
-  args.first {
+private fun parseToken(args: Array<String>): String {
+  return args.first {
     it.startsWith(TOKEN_COMMANDLINE_PARAMETER)
   }.substringAfter(TOKEN_COMMANDLINE_PARAMETER)
+}

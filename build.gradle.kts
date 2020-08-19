@@ -20,6 +20,10 @@ dependencies {
   implementation("net.dv8tion:JDA:4.2.0_192")
   // logger, required by JDA
   implementation("org.slf4j:slf4j-jdk14:1.7.30")
+
+
+  // Tests
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
 }
 
 tasks {
