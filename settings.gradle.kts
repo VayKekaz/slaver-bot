@@ -1,2 +1,1 @@
-rootProject.name = "slaver-bot"
-
+rootProject.name = "slaver"

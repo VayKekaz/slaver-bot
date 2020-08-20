@@ -1,10 +1,16 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
+  id("org.springframework.boot") version "2.3.3.RELEASE"
+  id("io.spring.dependency-management") version "1.0.10.RELEASE"
   kotlin("jvm") version "1.4.0"
+  kotlin("plugin.spring") version "1.4.0"
+  kotlin("plugin.jpa") version "1.4.0"
 }
 
 group = "com.vk.oed"
-version = "0.0.0"
-val kotlinVersion = "1.4.0"
+version = "0.0.1-SNAPSHOT"
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
   mavenCentral()
@@ -12,25 +18,33 @@ repositories {
 }
 
 dependencies {
+  // Kotlin
+  implementation(kotlin("reflect"))
   implementation(kotlin("stdlib-jdk8"))
+  // Coroutines
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+  // Spring
+  implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+  testImplementation("org.springframework.boot:spring-boot-starter-test") {
+    exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+  }
+  // MySQL
+  runtimeOnly("mysql:mysql-connector-java")
+
   // Coroutines
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
 
   // Discord
   implementation("net.dv8tion:JDA:4.2.0_192")
-  // logger, required by JDA
-  implementation("org.slf4j:slf4j-jdk14:1.7.30")
-
-
-  // Tests
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
 }
 
-tasks {
-  compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-  }
-  compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+tasks.withType<Test> {
+  useJUnitPlatform()
+}
+
+tasks.withType<KotlinCompile> {
+  kotlinOptions {
+    freeCompilerArgs = listOf("-Xjsr305=strict")
+    jvmTarget = "11"
   }
 }

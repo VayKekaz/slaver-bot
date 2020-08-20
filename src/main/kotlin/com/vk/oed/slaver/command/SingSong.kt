@@ -5,11 +5,9 @@ import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.MessageChannel
 import net.dv8tion.jda.api.entities.User
 
-class SingSong(commandData: CommandData) : Command {
-
-  override val sender: User = commandData.sender
-  override val message: Message = commandData.message
-  override val channel: MessageChannel = commandData.channel
+class SingSong(
+    commandData: CommandData
+) : Command(commandData) {
 
   override fun execute() {
     channel.enqueue(

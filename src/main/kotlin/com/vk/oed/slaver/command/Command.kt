@@ -4,13 +4,13 @@ import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.MessageChannel
 import net.dv8tion.jda.api.entities.User
 
-interface Command {
+abstract class Command(commandData: CommandData) {
 
-  val sender: User
-  val message: Message
-  val channel: MessageChannel
+  val sender: User = commandData.sender
+  val message: Message = commandData.message
+  val channel: MessageChannel = commandData.channel
 
-  fun execute()
+  abstract fun execute()
 
   companion object {
     fun from(commandData: CommandData): Command? {

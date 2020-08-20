@@ -1,6 +1,6 @@
 package com.vk.oed.slaver.command
 
-import com.vk.oed.slaver.BOT_ID
+import com.vk.oed.slaver.Bot
 import net.dv8tion.jda.api.entities.ChannelType
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.MessageChannel
@@ -20,7 +20,7 @@ class CommandData(event: MessageReceivedEvent) {
     get() = message.mentionsBot
 
   private val Message.mentionsBot: Boolean
-    get() = this.mentionedUsers.stream().anyMatch { it.id == BOT_ID }
+    get() = this.mentionedUsers.stream().anyMatch { it.id == Bot.id }
 
   val fromPrivateChannel: Boolean
     get() = channel.type == ChannelType.PRIVATE
