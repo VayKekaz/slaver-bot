@@ -11,4 +11,14 @@ interface Command {
   val channel: MessageChannel
 
   fun execute()
+
+  companion object {
+    fun from(commandData: CommandData): Command? {
+      return when (commandData.commandClean) {
+        "sing song", "sing a song", "спой песню" ->
+          SingSong(commandData)
+        else -> null
+      }
+    }
+  }
 }
