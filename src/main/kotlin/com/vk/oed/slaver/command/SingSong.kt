@@ -1,23 +1,23 @@
 package com.vk.oed.slaver.command
 
 import com.vk.oed.slaver.enqueue
-import net.dv8tion.jda.api.entities.Message
-import net.dv8tion.jda.api.entities.MessageChannel
-import net.dv8tion.jda.api.entities.User
+import org.springframework.stereotype.Component
 
-class SingSong(
-    commandData: CommandData
-) : Command(commandData) {
+@Component
+class SingSong : Command {
 
-  override fun execute() {
-    channel.enqueue(
-      "Солнце светит, негры пашут\n" +
-          "Вот такая доля наша,\n" +
-          "Эй, хозяин мне б на волю\n" +
-          "Немогу я быть в загоне.\n" +
-          "Мне в загоне очень тесно,\n" +
-          "Ведь хотел я быть в оркестре,\n" +
-          "Чтобы мы пели песню вместе."
+  override val trigger: Regex =
+      Regex("sing song|song|sing a song")
+
+  override fun execute(commandData: CommandData) {
+    commandData.channel.enqueue(
+        "Солнце светит, негры пашут\n" +
+            "Вот такая доля наша,\n" +
+            "Эй, хозяин мне б на волю\n" +
+            "Немогу я быть в загоне.\n" +
+            "Мне в загоне очень тесно,\n" +
+            "Ведь хотел я быть в оркестре,\n" +
+            "Чтобы мы пели песню вместе."
     )
   }
 }

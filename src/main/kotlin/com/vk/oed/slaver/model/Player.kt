@@ -6,23 +6,15 @@ import javax.persistence.Id
 
 @Entity
 class Player(
-    @Id
-    var id: String? = null,
-    var money: Long? = null,
-    var slaves: Long? = null
-
+  @Id
+  var id: String,
+  var money: Double,
+  var slaves: Long
 ) {
-  constructor(user: User) : this() {
-    this.id = user.id
-    this.money = 0
-    this.slaves = 0
-  }
 
-  fun receiveMoney(amount: Long) {
-    this.money = this.money?.plus(amount)
-  }
-
-  fun buySlavesInQuantity(slaveNumber: Long) {
-    slaves = slaves?.plus(slaveNumber)
-  }
+  constructor(user: User) : this(
+    id = user.id,
+    money = 0.0,
+    slaves = 0
+  )
 }

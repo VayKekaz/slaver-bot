@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.MessageChannel
 import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 
-class CommandData(event: MessageReceivedEvent) {
+open class CommandData(event: MessageReceivedEvent) {
 
   val sender: User = event.author
   val message: Message = event.message
@@ -32,4 +32,12 @@ class CommandData(event: MessageReceivedEvent) {
     get() = this.contentStripped
       .replace("\\s+".toRegex(), " ")
       .substringAfter("@Slaver Bot ")
+
+  override fun toString(): String {
+    return "CommandData {\n" +
+        "    sender: ${this.sender.asTag}\n" +
+        "    message raw: ${this.message.contentRaw}\n" +
+        "    message clean: ${this.commandClean}\n" +
+        "    channel: ${this.channel.name}\n}"
+  }
 }

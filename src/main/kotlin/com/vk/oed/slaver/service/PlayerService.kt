@@ -8,14 +8,32 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
-class PlayerService(@Autowired val repository: PlayerRepository) {
+class PlayerService @Autowired constructor(
+    val repository: PlayerRepository
+) {
+  fun getPlayerBy(user: User): Player {
+    return repository.findByIdOrNull(user.id)
+        ?: createAndReturn(user)
+  }
 
-  fun getPlayerBy(user: User): Player? =
-      repository.findByIdOrNull(user.id)
+  fun createAndReturn(user: User): Player {
+    val player = Player(user)
+    repository.save(player)
+    return player
+  }
 
-  fun addAmountOfMoneyToUser(amount: Long, user: User) {
-    val player = getPlayerBy(user) ?: Player(user)
-    player.receiveMoney(amount)
+  fun addAmountOfMoneyToUser(amount: Double, user: User) {
+    val player = getPlayerBy(user)
+    player.money += amount
     repository.save(player)
   }
+
+  fun subtractAmountOfMoneyFromUser(amount: Double, user: User) {
+    val player = getPlayerBy(user)
+    player.money += amount
+    repository.save(player)
+  }
+
+  fun save(player: Player) =
+      repository.save(player)
 }

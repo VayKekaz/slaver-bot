@@ -1,8 +1,8 @@
 package com.vk.oed.slaver.listener
 
-import com.vk.oed.slaver.command.Command
+import com.vk.oed.slaver.Bot
+import com.vk.oed.slaver.CommandInvoker
 import com.vk.oed.slaver.command.CommandData
-import com.vk.oed.slaver.model.Player
 import com.vk.oed.slaver.service.PlayerService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -14,24 +14,21 @@ import org.springframework.stereotype.Component
 @Component
 class MessageListener
 @Autowired constructor(
-    val playerService: PlayerService
+    val playerService: PlayerService,
+    val invoker: CommandInvoker
 
 ) : ListenerAdapter() {
 
   override fun onMessageReceived(event: MessageReceivedEvent) {
     GlobalScope.launch {
       val commandData = CommandData(event)
-      playerService.addAmountOfMoneyToUser(5, commandData.sender)
+      playerService.addAmountOfMoneyToUser(Bot.moneyPerMessage!!, commandData.sender)
 
       if (isProbableCommand(commandData))
-        executeCommand(commandData)
+        invoker.execute(commandData)
     }
   }
 
-  private fun isProbableCommand(commandData: CommandData): Boolean =
-      !commandData.fromBot
-          && (commandData.mentionsBot || commandData.fromPrivateChannel)
-
-  private fun executeCommand(commandData: CommandData) =
-      Command.from(commandData)?.execute()
+  private fun isProbableCommand(CommandData: CommandData): Boolean =
+      !CommandData.fromBot && (CommandData.mentionsBot || CommandData.fromPrivateChannel)
 }
