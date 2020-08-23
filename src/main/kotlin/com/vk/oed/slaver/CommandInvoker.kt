@@ -12,11 +12,11 @@ class CommandInvoker @Autowired constructor(
 
   fun execute(commandData: CommandData) {
     findMatchingCommand(commandData)?.let {
-      println("executed command: $it")
-      println("with this data: $commandData")
+      println("EXEC cmd: ${it::class.simpleName}\n" +
+          "with $commandData")
       it.execute(commandData)
     } ?: run {
-      println("wrong command: $commandData")
+      println("WRONG cmd: $commandData")
     }
   }
 

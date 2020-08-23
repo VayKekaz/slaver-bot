@@ -1,6 +1,6 @@
 package com.vk.oed.slaver.service
 
-import com.vk.oed.slaver.db.PlayerRepository
+import com.vk.oed.slaver.repository.PlayerRepository
 import com.vk.oed.slaver.model.Player
 import net.dv8tion.jda.api.entities.User
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,8 +9,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class PlayerService @Autowired constructor(
-    val repository: PlayerRepository
+    private val repository: PlayerRepository
 ) {
+
   fun getPlayerBy(user: User): Player {
     return repository.findByIdOrNull(user.id)
         ?: createAndReturn(user)
@@ -22,18 +23,14 @@ class PlayerService @Autowired constructor(
     return player
   }
 
+  fun save(player: Player) =
+      repository.save(player)
+
   fun addAmountOfMoneyToUser(amount: Double, user: User) {
     val player = getPlayerBy(user)
     player.money += amount
     repository.save(player)
+    return
+    TODO("create new ways to update users by custom @Query")
   }
-
-  fun subtractAmountOfMoneyFromUser(amount: Double, user: User) {
-    val player = getPlayerBy(user)
-    player.money += amount
-    repository.save(player)
-  }
-
-  fun save(player: Player) =
-      repository.save(player)
 }

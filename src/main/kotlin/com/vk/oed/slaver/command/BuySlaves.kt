@@ -14,14 +14,14 @@ class BuySlaves(
       Regex("buy [0-9]+ slaves?")
 
   override fun execute(commandData: CommandData) {
-    val player = service.getPlayerBy(commandData.sender)
+    val player = getUpdated(commandData.sender)
     val amount = parseAmount(commandData)
     val moneyCost = amount * Bot.slavePrice!!
     if (player.money < moneyCost)
       throw LowBalanceException()
     player.money -= moneyCost
     player.slaves += amount
-    service.save(player)
+    playerService.save(player)
   }
 
   fun parseAmount(commandData: CommandData): Long =

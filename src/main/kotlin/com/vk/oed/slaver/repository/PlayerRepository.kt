@@ -1,4 +1,4 @@
-package com.vk.oed.slaver.db
+package com.vk.oed.slaver.repository
 
 import com.vk.oed.slaver.model.Player
 import org.springframework.data.repository.CrudRepository

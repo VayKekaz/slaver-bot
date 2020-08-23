@@ -22,6 +22,9 @@ class MessageListener
   override fun onMessageReceived(event: MessageReceivedEvent) {
     GlobalScope.launch {
       val commandData = CommandData(event)
+      if (commandData.fromBot) return@launch
+
+      println(commandData.message.contentRaw)
       playerService.addAmountOfMoneyToUser(Bot.moneyPerMessage!!, commandData.sender)
 
       if (isProbableCommand(commandData))

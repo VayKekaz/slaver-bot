@@ -31,7 +31,7 @@ open class CommandData(event: MessageReceivedEvent) {
   private val Message.commandClean: String
     get() = this.contentStripped
       .replace("\\s+".toRegex(), " ")
-      .substringAfter("@Slaver Bot ")
+      .substringAfter("@${Bot.name} ")
 
   override fun toString(): String {
     return "CommandData {\n" +
@@ -40,4 +40,8 @@ open class CommandData(event: MessageReceivedEvent) {
         "    message clean: ${this.commandClean}\n" +
         "    channel: ${this.channel.name}\n}"
   }
+
+  operator fun component1(): User = sender
+  operator fun component2(): Message = message
+  operator fun component3(): MessageChannel = channel
 }

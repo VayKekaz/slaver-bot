@@ -23,6 +23,8 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
   // Coroutines
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+  // Gson - JSON lib
+  implementation("com.google.code.gson:gson:2.8.6")
   // Spring
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   testImplementation("org.springframework.boot:spring-boot-starter-test") {
@@ -30,9 +32,6 @@ dependencies {
   }
   // MySQL
   runtimeOnly("mysql:mysql-connector-java")
-
-  // Coroutines
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
 
   // Discord
   implementation("net.dv8tion:JDA:4.2.0_192")
@@ -46,5 +45,23 @@ tasks.withType<KotlinCompile> {
   kotlinOptions {
     freeCompilerArgs = listOf("-Xjsr305=strict")
     jvmTarget = "11"
+  }
+}
+
+tasks {
+  register("fatJar", Jar::class.java) {
+    archiveClassifier.set("all")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+      attributes(
+          "Main-Class" to "puk.pizza.orderManage.server.ServerApplicationKt"
+      )
+    }
+    from(configurations.runtimeClasspath.get()
+        .onEach { println("add from dependencies: ${it.name}") }
+        .map { if (it.isDirectory) it else zipTree(it) })
+    val sourcesMain = sourceSets.main.get()
+    sourcesMain.allSource.forEach { println("add from sources: ${it.name}") }
+    from(sourcesMain.output)
   }
 }
