@@ -1,11 +1,14 @@
 package com.vk.oed.slaver.service
 
+import com.vk.oed.slaver.Bot
 import com.vk.oed.slaver.repository.PlayerRepository
 import com.vk.oed.slaver.model.Player
 import net.dv8tion.jda.api.entities.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import java.time.Duration
+import java.time.Instant
 
 @Service
 class PlayerService @Autowired constructor(
@@ -32,5 +35,15 @@ class PlayerService @Autowired constructor(
     repository.save(player)
     return
     TODO("create new ways to update users by custom @Query")
+  }
+
+  fun getUpdatedPlayerBy(user: User): Player {
+    val player = getPlayerBy(user)
+    val now = Instant.now()
+    val timeDifference = Duration.between(player.lastBalanceUpdate, now).abs().toSeconds()
+
+    player.money += player.slaves * Bot.slaveMoneyPerSecond!! * timeDifference
+    player.lastBalanceUpdate = now
+    return player
   }
 }

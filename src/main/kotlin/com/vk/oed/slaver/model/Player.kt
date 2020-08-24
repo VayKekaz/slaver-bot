@@ -1,5 +1,7 @@
 package com.vk.oed.slaver.model
 
+import net.dv8tion.jda.api.EmbedBuilder
+import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.entities.User
 import java.time.Instant
 import javax.persistence.*

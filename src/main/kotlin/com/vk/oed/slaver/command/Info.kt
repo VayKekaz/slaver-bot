@@ -22,15 +22,13 @@ class Info @Autowired constructor(
     channel.enqueue(response)
   }
 
-  private fun createResponse(sender: User): MessageEmbed {
-    val player = getUpdated(sender)
-    val response = EmbedBuilder()
-    response.apply {
-      setAuthor(sender.name, null, sender.avatarUrl)
-      setTitle("Info about slaver.")
-      addField("Money", player.money.toString(), true)
-      addField("Slaves", player.slaves.toString(),true)
-    }
-    return response.build()
+  fun createResponse(sender: User): MessageEmbed {
+    val player = playerService.getUpdatedPlayerBy(sender)
+    return playerInfoEmbedTemplate(
+        sender.name,
+        sender.avatarUrl,
+        player.money,
+        player.slaves
+    )
   }
 }

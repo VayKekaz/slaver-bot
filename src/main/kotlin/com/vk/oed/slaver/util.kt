@@ -12,3 +12,11 @@ fun MessageChannel.enqueue(message: MessageEmbed) =
 
 fun MessageChannel.enqueue(message: Message) =
     this.sendMessage(message).queue()
+
+fun Message.commandClean(): String =
+    this.contentRaw
+        .clean()
+        .substringAfter("<@!${Bot.id}> ")
+
+fun String.clean(): String =
+    this.replace(Regex("\\s+"), " ")

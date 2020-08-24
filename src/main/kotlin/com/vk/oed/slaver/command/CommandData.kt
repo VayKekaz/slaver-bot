@@ -1,6 +1,7 @@
 package com.vk.oed.slaver.command
 
 import com.vk.oed.slaver.Bot
+import com.vk.oed.slaver.commandClean
 import net.dv8tion.jda.api.entities.ChannelType
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.MessageChannel
@@ -26,19 +27,15 @@ open class CommandData(event: MessageReceivedEvent) {
     get() = channel.type == ChannelType.PRIVATE
 
   val commandClean: String
-    get() = message.commandClean
-
-  private val Message.commandClean: String
-    get() = this.contentStripped
-      .replace("\\s+".toRegex(), " ")
-      .substringAfter("@${Bot.name} ")
+    get() = message.commandClean()
 
   override fun toString(): String {
     return "CommandData {\n" +
         "    sender: ${this.sender.asTag}\n" +
         "    message raw: ${this.message.contentRaw}\n" +
         "    message clean: ${this.commandClean}\n" +
-        "    channel: ${this.channel.name}\n}"
+        "    channel: ${this.channel.name}\n" +
+        "}"
   }
 
   operator fun component1(): User = sender
