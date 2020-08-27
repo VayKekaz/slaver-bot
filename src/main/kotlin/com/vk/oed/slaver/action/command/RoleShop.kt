@@ -1,6 +1,8 @@
-package com.vk.oed.slaver.command
+package com.vk.oed.slaver.action.command
 
 import com.vk.oed.slaver.Bot
+import com.vk.oed.slaver.action.Command
+import com.vk.oed.slaver.action.CommandData
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Message

@@ -1,5 +1,6 @@
 package com.vk.oed.slaver
 
+import kotlinx.coroutines.runBlocking
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
@@ -7,5 +8,5 @@ import org.springframework.boot.runApplication
 class SlaverApplication
 
 fun main(args: Array<String>) {
-	runApplication<SlaverApplication>(*args)
+	runBlocking { runApplication<SlaverApplication>(*args) }
 }

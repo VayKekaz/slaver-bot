@@ -1,8 +1,11 @@
-package com.vk.oed.slaver.command
+package com.vk.oed.slaver.action.command
 
+import com.vk.oed.slaver.action.CommandData
+import com.vk.oed.slaver.action.RpgAction
+import com.vk.oed.slaver.action.RpgCommand
+import com.vk.oed.slaver.action.playerInfoEmbedTemplate
 import com.vk.oed.slaver.enqueue
 import com.vk.oed.slaver.service.PlayerService
-import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.entities.User
 import org.springframework.beans.factory.annotation.Autowired

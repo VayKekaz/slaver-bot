@@ -13,6 +13,9 @@ fun MessageChannel.enqueue(message: MessageEmbed) =
 fun MessageChannel.enqueue(message: Message) =
     this.sendMessage(message).queue()
 
+fun Message.mentionsBot(): Boolean =
+    this.mentionedUsers.stream().anyMatch { it.id == Bot.id }
+
 fun Message.commandClean(): String =
     this.contentRaw
         .clean()

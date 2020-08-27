@@ -34,7 +34,10 @@ dependencies {
   runtimeOnly("mysql:mysql-connector-java")
 
   // Discord
-  implementation("net.dv8tion:JDA:4.2.0_192")
+  implementation("net.dv8tion:JDA:4.2.0_192") {
+    exclude(module = "opus-java")
+  }
+  implementation("dev.minn:jda-ktx:0.1.0")
 }
 
 tasks.withType<Test> {

@@ -3,11 +3,10 @@ package com.vk.oed.slaver.listener
 import com.vk.oed.slaver.Bot
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.ReadyEvent
-import net.dv8tion.jda.api.hooks.ListenerAdapter
 
-class OnReadyValidator : ListenerAdapter() {
+class OnReadyValidator {
 
-  override fun onReady(event: ReadyEvent) {
+  fun onReady(event: ReadyEvent) {
     val jda = event.jda
 
     validateProperties()

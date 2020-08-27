@@ -1,6 +1,7 @@
-package com.vk.oed.slaver.command
+package com.vk.oed.slaver.action.command
 
 import com.vk.oed.slaver.Bot
+import com.vk.oed.slaver.action.*
 import com.vk.oed.slaver.commandClean
 import com.vk.oed.slaver.enqueue
 import com.vk.oed.slaver.exception.LowBalanceException
@@ -14,8 +15,8 @@ import java.time.Instant
 
 @Component
 class BuySlaves(
-    service: PlayerService
-) : RpgCommand(service) {
+    playerService: PlayerService
+) : RpgCommand(playerService) {
 
   override val trigger: Regex =
       Regex("buy [0-9]+ slaves?")
