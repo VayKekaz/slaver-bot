@@ -4,9 +4,8 @@ interface Button {
 
   val trigger: String
 
-  fun triggeredBy() {
-    TODO("trigger by footer")
-  }
+  fun triggeredBy(buttonData: ButtonData): Boolean =
+      this.trigger == buttonData.marker
 
   fun execute(buttonData: ButtonData)
 }

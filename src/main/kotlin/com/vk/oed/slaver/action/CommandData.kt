@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.entities.MessageChannel
 import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 
-open class CommandData(event: MessageReceivedEvent) : ActionData {
+class CommandData(event: MessageReceivedEvent) : ActionData {
 
   override val actor: User = event.author
   override val message: Message = event.message
@@ -31,8 +31,4 @@ open class CommandData(event: MessageReceivedEvent) : ActionData {
         "  channel: ${this.channel.name}\n" +
         "}"
   }
-
-  operator fun component1(): User = actor
-  operator fun component2(): Message = message
-  operator fun component3(): MessageChannel = channel
 }

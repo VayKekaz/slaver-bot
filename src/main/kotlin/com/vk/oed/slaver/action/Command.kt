@@ -4,8 +4,8 @@ interface Command {
 
   val trigger: Regex
 
-  fun triggeredBy(cleanCommand: String): Boolean =
-      trigger.matches(cleanCommand)
+  fun triggeredBy(commandData: CommandData): Boolean =
+      trigger.matches(commandData.commandClean)
 
   fun execute(commandData: CommandData)
 }

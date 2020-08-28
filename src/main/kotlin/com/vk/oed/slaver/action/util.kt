@@ -15,6 +15,7 @@ fun playerInfoEmbedTemplate(
     setTitle("Info about slaver.")
     addField("Money", "${money.toInt()}$", true)
     addField("Slaves", slaves.toString(), true)
+    setFooter("slaver info", "https://img.icons8.com/cotton/2x/info.png")
   }
   return response.build()
 }

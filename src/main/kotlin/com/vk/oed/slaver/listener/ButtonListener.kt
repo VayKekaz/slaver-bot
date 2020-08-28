@@ -1,35 +1,24 @@
 package com.vk.oed.slaver.listener
 
-import com.vk.oed.slaver.Bot
 import com.vk.oed.slaver.action.ButtonData
-import dev.minn.jda.ktx.await
-import kotlinx.coroutines.*
-import net.dv8tion.jda.api.entities.Message
-import net.dv8tion.jda.api.entities.User
+import com.vk.oed.slaver.invoker.ButtonInvoker
+import kotlinx.coroutines.coroutineScope
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent
-import net.dv8tion.jda.api.hooks.ListenerAdapter
-import net.dv8tion.jda.api.requests.RestAction
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.util.function.Consumer
 
 @Component
-class ButtonListener : ListenerAdapter() {
+class ButtonListener
+@Autowired constructor(
+    private val invoker: ButtonInvoker
+) {
 
-  override fun onMessageReactionAdd(event: MessageReactionAddEvent) {
-    runBlocking {
+  suspend fun onMessageReactionAdd(event: MessageReactionAddEvent) {
+    coroutineScope {
       val buttonData = ButtonData(event)
-      if (event.reactedOnMyMessage()) {
-        TODO("do things")
-      }
-    }
-  }
+      if (!buttonData.reactedOnMyMessage || buttonData.isActorBot) return@coroutineScope
 
-  suspend fun MessageReactionAddEvent.reactedOnMyMessage(): Boolean {
-    val event = this
-    return coroutineScope {
-      val messageRestAction = event.retrieveMessage()
-      val reactionAuthor = messageRestAction.map(Message::getAuthor).submit().await()
-      return@coroutineScope reactionAuthor.id == Bot.id
+      invoker.invoke(buttonData)
     }
   }
 }

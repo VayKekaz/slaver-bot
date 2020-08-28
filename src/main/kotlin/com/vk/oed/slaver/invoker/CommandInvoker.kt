@@ -20,12 +20,6 @@ class CommandInvoker
         ?: println("WRONG cmd: $commandData")
   }
 
-  private fun findMatchingAction(commandData: CommandData): Command? {
-    val cleanCommand = commandData.commandClean
-    return try {
-      commandActions.first { it.triggeredBy(cleanCommand) }
-    } catch (exception: NoSuchElementException) {
-      null
-    }
-  }
+  private fun findMatchingAction(commandData: CommandData): Command? =
+      commandActions.firstOrNull { it.triggeredBy(commandData) }
 }

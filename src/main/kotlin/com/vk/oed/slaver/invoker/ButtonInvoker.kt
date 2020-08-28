@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component
 
 
 @Component
-class ButtonInvoker @Autowired constructor(
+class ButtonInvoker
+@Autowired constructor(
     val buttonActions: Array<out Button>
 ) {
 
   fun invoke(buttonData: ButtonData) {
-
+    findMatchingAction(buttonData)?.execute(buttonData)
   }
 
-  private fun findMatchingAction(buttonData: ButtonData): Button {
-    TODO("searching for matching embed footer")
-  }
+  private fun findMatchingAction(buttonData: ButtonData): Button? =
+      buttonActions.firstOrNull { it.triggeredBy(buttonData) }
 }

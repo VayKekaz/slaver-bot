@@ -4,18 +4,19 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.vk.oed.slaver.listener.ButtonListener
 import com.vk.oed.slaver.listener.MessageListener
-import com.vk.oed.slaver.listener.OnReadyValidator
-import com.vk.oed.slaver.model.Role
+import com.vk.oed.slaver.model.RpgRole
 import dev.minn.jda.ktx.injectKTX
 import dev.minn.jda.ktx.listener
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.events.ReadyEvent
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent
+import org.hibernate.PropertyNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
+import java.lang.NullPointerException
 import kotlin.concurrent.thread
 
 @Component
@@ -25,42 +26,29 @@ class Bot
     buttonListener: ButtonListener,
 ) {
 
-  private val jda: JDA
-
   init {
-    val builder = JDABuilder.createDefault(token)
-    builder.injectKTX()
-    builder.addEventListeners(
-        messageListener,
-        OnReadyValidator(),
-    )
-    jda = builder.build()
-    jda.listener<ReadyEvent> {
-      thread { OnReadyValidator().onReady(it) }
-    }
+    jda.listener<ReadyEvent> { thread { validateBot() } }
     jda.listener<MessageReceivedEvent> { messageListener.onMessageReceived(it) }
     jda.listener<MessageReactionAddEvent> { buttonListener.onMessageReactionAdd(it) }
-
-    id = jda.selfUser.id
   }
-
-  @Bean
-  fun jda(): JDA = jda
 
   companion object Properties {
     // bot.json
-    val token: String?
-    val name: String?
+    val token: String
+    val name: String
 
     // economy.json
-    val moneyPerMessage: Double?
-    val slavePrice: Double?
-    val slaveMoneyPerSecond: Double?
+    val moneyPerMessage: Double
+    val slavePrice: Double
+    val slaveMoneyPerSecond: Double
+
+    val id: String
 
     // roles.json
-    val roles: Array<Role>
+    val rpgRoles: Array<RpgRole>
 
-    var id: String? = null
+    val jda: JDA
+    val guild: Guild
 
     init {
       val gson = Gson()
@@ -75,18 +63,31 @@ class Bot
               object : TypeToken<HashMap<String, Double>>() {}.type
           )
 
-      roles =
+      rpgRoles =
           gson.fromJson(
               createJsonString("roles"),
-              object : TypeToken<Array<Role>>() {}.type
+              object : TypeToken<Array<RpgRole>>() {}.type
           )
 
-      token = botProperties["token"]
-      name = botProperties["name"]
+      try {
+        token = botProperties["token"]!!
+        name = botProperties["name"]!!
 
-      moneyPerMessage = economyProperties["moneyPerMessage"]
-      slavePrice = economyProperties["slavePrice"]
-      slaveMoneyPerSecond = economyProperties["slaveMoneyPerSecond"]
+        moneyPerMessage = economyProperties["moneyPerMessage"]!!
+        slavePrice = economyProperties["slavePrice"]!!
+        slaveMoneyPerSecond = economyProperties["slaveMoneyPerSecond"]!!
+
+      } catch (exception: NullPointerException) {
+        throw PropertyNotFoundException("Please provide correct properties.")
+      }
+
+      val builder = JDABuilder.createDefault(token)
+      builder.injectKTX()
+      jda = builder.build().awaitReady()
+
+      id = jda.selfUser.id
+
+      guild = jda.guilds[0]
     }
 
     /**

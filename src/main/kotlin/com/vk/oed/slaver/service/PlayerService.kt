@@ -39,11 +39,7 @@ class PlayerService @Autowired constructor(
 
   fun getUpdatedPlayerBy(user: User): Player {
     val player = getPlayerBy(user)
-    val now = Instant.now()
-    val timeDifference = Duration.between(player.lastBalanceUpdate, now).abs().toSeconds()
-
-    player.money += player.slaves * Bot.slaveMoneyPerSecond!! * timeDifference
-    player.lastBalanceUpdate = now
+    player.updateBalance()
     return player
   }
 }

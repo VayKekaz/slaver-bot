@@ -12,4 +12,8 @@ interface ActionData {
 
   val isActorBot: Boolean
     get() = actor.isBot
+
+  operator fun component1(): User = actor
+  operator fun component2(): Message = message
+  operator fun component3(): MessageChannel = channel
 }

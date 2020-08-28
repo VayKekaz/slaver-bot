@@ -25,12 +25,11 @@ class BuySlaves(
     val (sender, message, channel) = commandData
     val player = playerService.getUpdatedPlayerBy(sender)
     val slaveQuantity = getQuantityFrom(message)
-    val moneyCost = slaveQuantity * Bot.slavePrice!!
+    val moneyCost = slaveQuantity * Bot.slavePrice
     if (player.money < moneyCost)
       throw LowBalanceException()
     player.money -= moneyCost
     player.slaves += slaveQuantity
-    player.lastBalanceUpdate = Instant.now()
     playerService.save(player)
     channel.enqueue(createResponse(sender, player, moneyCost, slaveQuantity))
   }
