@@ -57,7 +57,7 @@ tasks {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
       attributes(
-          "Main-Class" to "puk.pizza.orderManage.server.ServerApplicationKt"
+          "Main-Class" to "com.vk.oed.slaver.SlaverApplicationKt"
       )
     }
     from(configurations.runtimeClasspath.get()
