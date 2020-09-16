@@ -1,0 +1,16 @@
+[
+  {
+    "name": "dungeon 1",
+    "minBounty": 10,
+    "maxBounty": 100,
+    "price": 40,
+    "sortieDuration": 30
+  },
+  {
+    "name": "dungeon 2",
+    "minBounty": 20,
+    "maxBounty": 200,
+    "price": 90,
+    "sortieDuration": 60
+  }
+]

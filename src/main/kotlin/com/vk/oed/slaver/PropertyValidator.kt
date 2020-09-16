@@ -4,7 +4,9 @@ import net.dv8tion.jda.api.JDA
 
 
 fun validateBot() {
-  Bot.jda.validateRoles()
+  Bot.jda.apply {
+    validateRoles()
+  }
 }
 
 private fun JDA.validateRoles() {

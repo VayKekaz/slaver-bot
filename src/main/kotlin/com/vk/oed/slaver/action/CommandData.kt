@@ -1,7 +1,7 @@
 package com.vk.oed.slaver.action
 
-import com.vk.oed.slaver.commandClean
-import com.vk.oed.slaver.mentionsBot
+import com.vk.oed.slaver.util.commandClean
+import com.vk.oed.slaver.util.mentionsBot
 import net.dv8tion.jda.api.entities.ChannelType
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.MessageChannel

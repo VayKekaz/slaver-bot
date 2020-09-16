@@ -1,5 +1,6 @@
-package com.vk.oed.slaver
+package com.vk.oed.slaver.util
 
+import com.vk.oed.slaver.Bot
 import net.dv8tion.jda.api.entities.*
 
 fun MessageChannel.enqueue(message: CharSequence) =

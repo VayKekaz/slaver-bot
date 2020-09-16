@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.vk.oed"
-version = "0.0.1-SNAPSHOT"
+version = "1"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -32,6 +32,8 @@ dependencies {
   }
   // MySQL
   runtimeOnly("mysql:mysql-connector-java")
+  // Task scheduler
+  implementation("com.github.shyiko.skedule:skedule:0.4.0")
 
   // Discord
   implementation("net.dv8tion:JDA:4.2.0_192") {

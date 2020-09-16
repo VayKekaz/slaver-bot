@@ -8,13 +8,12 @@ import org.springframework.stereotype.Component
 @Component
 class CommandInvoker
 @Autowired constructor(
-    private val commandActions: Array<out Command>
+    private val commandActions: Array<out Command>,
 ) {
 
   fun invoke(commandData: CommandData) {
     findMatchingAction(commandData)?.let {
-      println("EXEC cmd: ${it::class.simpleName}" +
-          "with $commandData")
+      println("EXEC cmd: ${it::class.simpleName} with $commandData")
       it.execute(commandData)
     }
         ?: println("WRONG cmd: $commandData")

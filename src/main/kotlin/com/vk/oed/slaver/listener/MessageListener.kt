@@ -28,7 +28,7 @@ class MessageListener
       if (commandData.isActorBot) return@coroutineScope
 
       println(commandData.message.contentRaw)
-      playerService.addAmountOfMoneyToUser(Bot.moneyPerMessage!!, commandData.actor)
+      playerService.addAmountOfMoneyToUser(Bot.moneyPerMessage, commandData.actor)
 
       if (isProbableCommand(commandData))
         invoker.invoke(commandData)

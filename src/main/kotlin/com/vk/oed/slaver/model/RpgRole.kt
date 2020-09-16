@@ -1,25 +1,28 @@
 package com.vk.oed.slaver.model
 
 import com.vk.oed.slaver.Bot
+import com.vk.oed.slaver.util.dollarEmote
 import net.dv8tion.jda.api.entities.Role
 import java.lang.NullPointerException
 import javax.persistence.Embeddable
-import javax.persistence.Transient
 
-@Embeddable
+@Embeddable // TODO: change to many-to-one, change to not-null types
 class RpgRole
 constructor(
     var roleId: String?,
     var price: Double?,
-    @Transient var description: String?,
-    @Transient var emoji: String?,
+    var description: String?,
+    var emoji: String?,
 ) {
 
   fun asShopItem(): String =
-      "${asMention()} **price: $price$** — $description"
+      "${emojiAsDiscordEmote()} ${asMention()} **price: $price$ $dollarEmote** — $description"
 
   fun asMention(): String =
       "<@&$roleId>"
+
+  fun emojiAsDiscordEmote(): String =
+      "<:emoji:${emoji}>"
 
   fun discordRole(): Role? = try {
     Bot.jda.getRoleById(roleId!!)

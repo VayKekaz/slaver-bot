@@ -1,6 +1,6 @@
 package com.vk.oed.slaver.action
 
-import com.vk.oed.slaver.isMe
+import com.vk.oed.slaver.util.isMe
 import dev.minn.jda.ktx.await
 import kotlinx.coroutines.coroutineScope
 import net.dv8tion.jda.api.entities.*

@@ -2,8 +2,8 @@ package com.vk.oed.slaver.action.command
 
 import com.vk.oed.slaver.Bot
 import com.vk.oed.slaver.action.*
-import com.vk.oed.slaver.commandClean
-import com.vk.oed.slaver.enqueue
+import com.vk.oed.slaver.util.commandClean
+import com.vk.oed.slaver.util.enqueue
 import com.vk.oed.slaver.exception.LowBalanceException
 import com.vk.oed.slaver.model.Player
 import com.vk.oed.slaver.service.PlayerService
@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.MessageBuilder
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.User
 import org.springframework.stereotype.Component
-import java.time.Instant
 
 @Component
 class BuySlaves(

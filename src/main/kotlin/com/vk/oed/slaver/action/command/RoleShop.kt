@@ -15,17 +15,16 @@ class RoleShop : Command {
       Regex("shop|role shop|roles")
 
   override fun execute(commandData: CommandData) {
-    commandData.channel.sendMessage(buildShop()).queue {
+    val channel = commandData.channel
+    channel.sendMessage(createEmbed()).queue {
       attachBuyButtonsTo(it)
     }
   }
 
-  fun buildShop(): MessageEmbed {
+  fun createEmbed(): MessageEmbed {
     val response = EmbedBuilder()
     response.apply {
-      val avatarUrl =
-          "https://cdn.discordapp.com/avatars/745015437116571659/99f31d98f24a1d8c0ad766d2b2e90a61.png"
-      setAuthor("Role Shop", null, avatarUrl)
+      setAuthor("Role Shop", null, Bot.avatarUrl)
       setDescription(buildRolesPreview())
       setFooter("slaver role shop")
     }

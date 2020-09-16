@@ -2,7 +2,7 @@ package com.vk.oed.slaver.action.command
 
 import com.vk.oed.slaver.action.Command
 import com.vk.oed.slaver.action.CommandData
-import com.vk.oed.slaver.enqueue
+import com.vk.oed.slaver.util.enqueue
 import org.springframework.stereotype.Component
 
 @Component
